@@ -1,16 +1,18 @@
-INCLUDE_DIRECTORIES( ./ )
+include_directories ( ./ )
 
-SET(OPT_FILES "")
+set (OPT_FILES "")
 
-IF (CMAKE_Fortran_COMPILER)
-    SET(OPT_FILES lbfgs.f lbfgstrainer.cpp)
-ELSE ()
-    MESSAGE(STATUS "[Warning] Fortran compiler not available,  LBFGS module will not be built.")
-ENDIF()
+if (CMAKE_Fortran_COMPILER)
+    set (OPT_FILES lbfgs.f lbfgstrainer.cpp)
+else (CMAKE_Fortran_COMPILER)
+    message (STATUS
+        "[Warning] Fortran compiler not available, "
+        "LBFGS module will not be built.")
+endif (CMAKE_Fortran_COMPILER)
 
 # --- Build libmaxent ---
 
-ADD_LIBRARY(maxent
+add_library (maxent
     display.cpp
     modelfile.cpp
     trainer.cpp
@@ -20,26 +22,43 @@ ADD_LIBRARY(maxent
     lbfgs_wrapper.c
     ${OPT_FILES})
 
-SET (GETOPT_FILES "")
+set (GETOPT_FILES "")
 
-IF (WIN32 OR MINGW)
-    SET (GETOPT_FILES getopt.c getopt1.c)
-ENDIF ()
+if (WIN32 OR MINGW)
+    set (GETOPT_FILES getopt.c getopt1.c)
+endif ()
 
-ADD_EXECUTABLE(maxent-main
+add_executable (maxent-main
     maxent.cpp
     display.cpp
     maxent_cmdline.c
     f77_dummy_main.cpp
     ${GETOPT_FILES})
 
-TARGET_LINK_LIBRARIES(maxent-main maxent)
+target_link_libraries (maxent-main maxent)
 
 # --- Config .hpp files ---
 
-CONFIGURE_FILE(maxentmodel.hpp  ${INCLUDE_DIR}/maxentmodel.hpp      @ONLY)
-CONFIGURE_FILE(itemmap.hpp      ${INCLUDE_DIR}/itemmap.hpp          @ONLY)
-CONFIGURE_FILE(meevent.hpp      ${INCLUDE_DIR}/ext_algorithm.hpp    @ONLY)
-CONFIGURE_FILE(itemmap.tcc      ${INCLUDE_DIR}/itemmap.tcc          @ONLY)
-CONFIGURE_FILE(eventspace.hpp   ${INCLUDE_DIR}/eventspace.hpp       @ONLY)
-CONFIGURE_FILE(eventspace.tcc   ${INCLUDE_DIR}/eventspace.tcc       @ONLY)
+configure_file (maxentmodel.hpp
+    ${INCLUDE_OUTPUT_DIR}/maxentmodel.hpp
+    @ONLY)
+
+configure_file (itemmap.hpp
+    ${INCLUDE_OUTPUT_DIR}/itemmap.hpp
+    @ONLY)
+
+configure_file (meevent.hpp
+    ${INCLUDE_OUTPUT_DIR}/ext_algorithm.hpp
+    @ONLY)
+
+configure_file (itemmap.tcc
+    ${INCLUDE_OUTPUT_DIR}/itemmap.tcc
+    @ONLY)
+
+configure_file (eventspace.hpp   
+    ${INCLUDE_OUTPUT_DIR}/eventspace.hpp
+    @ONLY)
+
+configure_file (eventspace.tcc
+    ${INCLUDE_OUTPUT_DIR}/eventspace.tcc
+    @ONLY)
