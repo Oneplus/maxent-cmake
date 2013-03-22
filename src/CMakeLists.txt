@@ -1,4 +1,4 @@
-include_directories ( ./ ../lib/ )
+include_directories ( ./ ${LIBRARY_OUTPUT_PATH})
 
 set (OPT_FILES "")
 

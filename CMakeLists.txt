@@ -6,7 +6,6 @@ set (CMAKE_MODULE_PATH      ${PROJECT_SOURCE_DIR}/cmake)
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set (LIBRARY_OUTPUT_PATH    ${PROJECT_SOURCE_DIR}/lib)
 set (INCLUDE_OUTPUT_DIR     ${PROJECT_SOURCE_DIR}/include)
-
 set (SOURCE_DIR             ${PROJECT_SOURCE_DIR}/src)
 
 # checking section
