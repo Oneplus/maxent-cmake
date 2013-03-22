@@ -7,6 +7,8 @@ set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set (LIBRARY_OUTPUT_PATH    ${PROJECT_SOURCE_DIR}/lib)
 set (INCLUDE_OUTPUT_DIR     ${PROJECT_SOURCE_DIR}/include)
 
+set (SOURCE_DIR             ${PROJECT_SOURCE_DIR}/src)
+
 # checking section
 include (CheckFunctionExists)
 include (CheckIncludeFile)
@@ -81,4 +83,9 @@ configure_file (python/setup.py.in  python/setup.py)
 
 add_subdirectory (src)
 
+message (STATUS ${CMAKE_BUILD_TYPE})
+
+if (CMAKE_BUILD_TYPE STREQUAL "Test")
+    add_subdirectory (test)
+endif (CMAKE_BUILD_TYPE STREQUAL "Test")
 
