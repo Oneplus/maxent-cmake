@@ -1,32 +1,40 @@
-# This is the surprisingly simple Makefile.
-# I don't like the way gmake and automake work, they tend to cause 
-# more problems. Therefore I use Jam instead.
-#
-# This file does the following things:
-# First, it builds jam executable in tools/jam if it is not availiable on the
-# system. 
-# Then it forwards all building requests to Jam
-# Jam is the building tool of the well known Boost C++ lib:
-# http://www.boost.org
+##############################################################
+#               CMake Project Wrapper Makefile               #
+############################################################## 
 
-all: tools/jam build_all
+SHELL := /bin/bash
+RM    := rm -rf
 
-build_all:
-	@tools/jam -d0
+all: ./build/Makefile
+	@ $(MAKE) -C build
 
-install: tools/jam
-	@tools/jam install
+./build/Makefile:
+	@ (cd build >/dev/null 2>&1 && cmake ..)
 
-uninstall: tools/jam
-	@tools/jam uninstall
+distclean:
+	@- (cd build >/dev/null 2>&1 && cmake .. >/dev/null 2>&1)
+	@- $(MAKE) --silent -C build clean || true
+	@- $(RM) ./build/Makefile
+	@- $(RM) ./build/src
+	@- $(RM) ./build/test
+	@- $(RM) ./build/CMake*
+	@- $(RM) ./build/cmake.*
+	@- $(RM) ./build/*.cmake
+	@- $(RM) ./build/*.txt
+	@- $(RM) ./docs/*.html
+	@- $(RM) ./docs/*.css
+	@- $(RM) ./docs/*.png
+	@- $(RM) ./docs/*.jpg
+	@- $(RM) ./docs/*.gif
+	@- $(RM) ./docs/*.tiff
+	@- $(RM) ./docs/*.php
+	@- $(RM) ./docs/search
+	@- $(RM) ./docs/installdox
 
-clean: tools/jam
-	@BUILD_TEST=yes tools/jam clean
 
-unittest: tools/jam
-	@BUILD_TEST=yes tools/jam -d0
+ifeq ($(findstring distclean,$(MAKECMDGOALS)),)
 
-tools/jam:
-	@cd tools && sh build_jam.sh
+    $(MAKECMDGOALS): ./build/Makefile
+	@ $(MAKE) -C build $(MAKECMDGOALS)
 
-# END OF FILE
+endif
