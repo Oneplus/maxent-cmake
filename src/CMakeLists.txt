@@ -1,4 +1,4 @@
-include_directories ( ./ )
+include_directories ( ./ ../lib/ )
 
 set (OPT_FILES "")
 

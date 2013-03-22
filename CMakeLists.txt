@@ -74,16 +74,17 @@ endif (NOT WINDOWS)
 # configure section
 # -----------------------------------------------
 
-configure_file (config.h.in         config.h)
-configure_file (python/setup.py.in  python/setup.py)
+configure_file (${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
+
+configure_file (${CMAKE_CURRENT_SOURCE_DIR}/python/setup.py.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/python/setup.py)
 
 # -----------------------------------------------
 # building section
 # -----------------------------------------------
 
 add_subdirectory (src)
-
-message (STATUS ${CMAKE_BUILD_TYPE})
 
 if (CMAKE_BUILD_TYPE STREQUAL "Test")
     add_subdirectory (test)
