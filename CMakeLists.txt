@@ -24,6 +24,7 @@ include (CMakeDetermineFortranCompiler)
 
 if (CMAKE_Fortran_COMPILER)
     set (HAVE_FORTRAN   1)
+    enable_language (Fortran)
 endif (CMAKE_Fortran_COMPILER)
 
 set (LINK_LIBS "")
@@ -51,6 +52,7 @@ endmacro (CHECK_INCLUDE_FILE_CONCAT)
 check_function_exists (getopt_long  HAVE_GETOPT_LONG)
 check_function_exists (getpagesize  HAVE_GETPAGESIZE)
 check_function_exists (gettimeofday HAVE_GETTIMEOFDAY)
+check_function_exists (mmap         HAVE_MMAP)
 
 check_include_file_concat ("ieeefp.h"       HAVE_IEEEFP_H)
 check_include_file_concat ("inttypes.h"     HAVE_INTTYPES_H)
@@ -64,10 +66,12 @@ check_include_file_concat ("sys/types.h"    HAVE_SYS_TYPES_H)
 check_include_file_concat ("unistd.h"       HAVE_UNISTD_H)
 
 check_library_exists_concat ("gnugetopt"    getopt      HAVE_LIBGNUGETOPT)
-check_library_exists_concat ("z"            deflateEnd  HAVE_LIBZ)
+check_library_exists_concat ("z"            gzopen      HAVE_LIBZ)
 if (NOT WINDOWS)
     check_library_exists_concat ("m"        random      HAVE_LIBM)
 endif (NOT WINDOWS)
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_CONFIG_H")
 
 # -----------------------------------------------
 # configure section
