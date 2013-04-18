@@ -1,5 +1,6 @@
 include_directories ( ./
     ${PROJECT_SOURCE_DIR}
+    ${LIBRARY_OUTPUT_PATH}
     ${INCLUDE_OUTPUT_PATH} 
     ${SOURCE_DIR} )
 
