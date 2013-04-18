@@ -1,20 +1,27 @@
-include_directories ( ./ ${INCLUDE_OUTPUT_PATH} ${SOURCE_DIR} )
+include_directories ( ./
+    ${PROJECT_SOURCE_DIR}
+    ${INCLUDE_OUTPUT_PATH} 
+    ${SOURCE_DIR} )
 
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}/test)
+link_directories (${LIBRARY_OUTPUT_PATH})
 
-add_executable (test_display    test_display.cpp)
-add_executable (test_event      test_event.cpp)
-add_executable (test_itemmap    test_itemmap.cpp)
-add_executable (test_gistrainer test_gistrainer.cpp)
-add_executable (test_modelfile  test_modelfile.cpp)
-add_executable (test_mmapfile   test_mmapfile.cpp)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test)
 
-target_link_libraries (test_display     maxent)
-target_link_libraries (test_event       maxent)
-target_link_libraries (test_itemmap     maxent)
-target_link_libraries (test_gistrainer  maxent)
-target_link_libraries (test_modelfile   maxent)
-target_link_libraries (test_mmapfile    maxent)
+add_executable (test_display        test_display.cpp)
+add_executable (test_event          test_event.cpp)
+add_executable (test_itemmap        test_itemmap.cpp)
+add_executable (test_gistrainer     test_gistrainer.cpp)
+add_executable (test_lbfgstrainer   test_lbfgstrainer.cpp)
+add_executable (test_modelfile      test_modelfile.cpp)
+add_executable (test_mmapfile       test_mmapfile.cpp)
+
+target_link_libraries (test_display         maxent)
+target_link_libraries (test_event           maxent)
+target_link_libraries (test_itemmap         maxent)
+target_link_libraries (test_lbfgstrainer    maxent z gfortran)
+target_link_libraries (test_gistrainer      maxent z)
+target_link_libraries (test_modelfile       maxent z)
+target_link_libraries (test_mmapfile        maxent)
 
 enable_testing ()
 

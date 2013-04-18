@@ -1,4 +1,6 @@
-include_directories ( ./ ../ ${LIBRARY_OUTPUT_PATH})
+include_directories ( ./
+    ${PROJECT_SOURCE_DIR}
+    ${LIBRARY_OUTPUT_PATH})
 
 set (OPT_FILES "")
 

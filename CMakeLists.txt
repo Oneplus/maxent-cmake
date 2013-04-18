@@ -8,15 +8,6 @@ set (LIBRARY_OUTPUT_PATH    ${PROJECT_SOURCE_DIR}/lib)
 set (INCLUDE_OUTPUT_DIR     ${PROJECT_SOURCE_DIR}/include)
 set (SOURCE_DIR             ${PROJECT_SOURCE_DIR}/src)
 
-# checking section
-include (CheckFunctionExists)
-include (CheckIncludeFile)
-include (CheckIncludeFileCXX)
-include (CheckIncludeFiles)
-include (CheckLibraryExists)
-include (CheckSymbolExists)
-include (CheckTypeSize)
-
 # -----------------------------------------------
 # checking section
 # -----------------------------------------------
@@ -27,27 +18,7 @@ if (CMAKE_Fortran_COMPILER)
     enable_language (Fortran)
 endif (CMAKE_Fortran_COMPILER)
 
-set (LINK_LIBS "")
-macro (CHECK_LIBRARY_EXISTS_CONCAT LIBRARY SYMBOL VARIABLE)
-    check_library_exists ("${LIBRARY};${LINK_LIBS}"
-        ${SYMBOL}
-        ""
-        ${VARIABLE})
-
-    if (${VARIABLE})
-        set (LINK_LIBS ${LINK_LIBS} ${LIBRARY})
-    endif (${VARIABLE})
-endmacro (CHECK_LIBRARY_EXISTS_CONCAT)
-
-set (USE_INCLUDES "")
-macro (CHECK_INCLUDE_FILE_CONCAT FILE VARIABLE)
-    check_include_files ("${USE_INCLUDES};${FILE}"
-        ${VARIABLE})
-
-    if (${VARIABLE})
-        set (USE_INCLUDES ${USE_INCLUDES} ${FILE})
-    endif (${VARIABLE})
-endmacro (CHECK_INCLUDE_FILE_CONCAT)
+include (ConfigureChecks)
 
 check_function_exists (getopt_long  HAVE_GETOPT_LONG)
 check_function_exists (getpagesize  HAVE_GETPAGESIZE)
@@ -88,8 +59,4 @@ configure_file (${CMAKE_CURRENT_SOURCE_DIR}/python/setup.py.in
 # -----------------------------------------------
 
 add_subdirectory (src)
-
-if (CMAKE_BUILD_TYPE STREQUAL "Test")
-    add_subdirectory (test)
-endif (CMAKE_BUILD_TYPE STREQUAL "Test")
-
+add_subdirectory (test)
