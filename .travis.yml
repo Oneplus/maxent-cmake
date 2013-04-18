@@ -4,6 +4,7 @@ compiler:
 
 before_install:
   - sudo apt-get install cmake
+  - sudo apt-get install gfortran
   - mkdir build
 
 script: ./configure && make
